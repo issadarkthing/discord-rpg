@@ -1,0 +1,29 @@
+{
+  "name": "discord-rpg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/discord-rpg/index.js",
+  "types": "./dist/discord-rpg/index.d.ts",
+  "files": [
+    "./dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "test": "nodemon -r dotenv/config ./dist/test/bot.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "discord.js-commando": "^0.12.3",
+    "dotenv": "^10.0.0",
+    "sqlite": "^4.0.23",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.0.0",
+    "@types/sqlite3": "^3.1.7"
+  }
+}
