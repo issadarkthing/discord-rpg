@@ -1,4 +1,4 @@
-import { TextChannel } from "discord.js";
+import { MessageEmbed, TextChannel } from "discord.js";
 import DiscordRPG from "../src";
 
 const client = new DiscordRPG({ 
@@ -33,6 +33,22 @@ client.registerCommand({ name: "name" }, (msg, args) => {
   msg.say(`Im in ${guild} on channel ${channel}`);
 })
 
+// embed message with image
+client.registerCommand({ name: "profile" }, async (msg, args) => {
+  const player = await client.db?.get(
+    `SELECT * FROM player WHERE player_id = ?`, msg.author.id
+  )!;
+
+  const embed = new MessageEmbed()
+    .setThumbnail(msg.author.displayAvatarURL())
+    .setColor("#ccc")
+    .addField("Name", msg.member?.displayName)
+    .addField("Gold", player.gold, true)
+    .addField("XP", player.xp, true);
+
+  msg.embed(embed);
+})
+
 // ban command
 client.registerCommand({ name: "ban", ownerOnly: true }, (msg, args) => {
   const [mention] = args;
@@ -55,12 +71,12 @@ client.registerCommand({
     const random = (min: number, max: number) => Math.floor(Math.random() * max) + min;
     const gold = random(1, 10);
     const xp = random(1, 10);
+    const playerID = msg.author.id;
     client.db?.run(`
       UPDATE player 
-      SET xp = ?, gold = ?
+      SET xp = xp + ?, gold = gold + ?
       WHERE player_id = ?
-    `, 
-      xp, gold, msg.author.id);
+    `, xp, gold, playerID);
     
     msg.say(`Caught a fish and earned ${gold} gold and ${xp} xp`);
   })
