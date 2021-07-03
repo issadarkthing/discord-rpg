@@ -6,7 +6,20 @@ const client = new DiscordRPG({
   owner: ["264010327023288323"],
 });
 
-client.setDBFile("data.db");
+client.setDBFile("data.db")
+  .then(() => {
+
+    // define custom schema
+    client.db?.run(`
+      CREATE TABLE IF NOT EXISTS player (
+       player_id TEXT UNIQUE PRIMARY KEY,
+       gold      DEFAULT 0,
+       xp        DEFAULT 0
+      )
+    `)
+
+  })
+
 
 client.once("ready", () => {
   console.log(`${client.user?.username} is ready`);
@@ -39,8 +52,45 @@ client.registerCommand({
   name: "fish", 
   throttling: { usages: 1, duration: 5 } }, 
   (msg, args) => {
-    msg.say("Caught a fish");
+    const random = (min: number, max: number) => Math.floor(Math.random() * max) + min;
+    const gold = random(1, 10);
+    const xp = random(1, 10);
+    client.db?.run(`
+      UPDATE player 
+      SET xp = ?, gold = ?
+      WHERE player_id = ?
+    `, 
+      xp, gold, msg.author.id);
+    
+    msg.say(`Caught a fish and earned ${gold} gold and ${xp} xp`);
   })
+
+// register player
+client.dispatcher.addInhibitor(msg => {
+
+  const id = msg.author.id;
+  const sql1 = `
+    SELECT player_id
+    FROM player
+    WHERE player_id = ?
+  `;
+  const sql2 = `
+    INSERT INTO player (player_id)
+    VALUES (?)
+  `;
+
+  client.db?.get(sql1, id)
+    .then(player => {
+      // if user is not in the database
+      if (!player) {
+        // add user to the db
+        client.db?.run(sql2, id);
+      }
+    })
+
+
+  return false;
+})
 
 // prevent banned members to use the bot
 client.dispatcher.addInhibitor(msg => {
@@ -61,7 +111,7 @@ client.dispatcher.addInhibitor(msg => {
 client.dispatcher.addInhibitor(msg => {
   const channel = client.provider.get(msg.guild, "channel");
 
-  if (channel && msg.channel !== channel) {
+  if (channel && msg.channel.toString() !== channel) {
     const response = msg.reply(
       `Commands on this channel is disabled. Please use ${channel}.`
     )

@@ -6,7 +6,7 @@ import {
   CommandoMessage,
   SQLiteProvider,
 } from "discord.js-commando";
-import { open } from "sqlite";
+import { open, Database } from "sqlite";
 import sqlite3 from "sqlite3";
 import crypto from "crypto";
 
@@ -15,17 +15,18 @@ interface RPGCommandInfo extends Partial<CommandInfo> {
 }
 
 class DiscordRPG extends Client {
+
+  db?: Database;
   constructor(options?: CommandoClientOptions) {
     super(options);
     this.registry.registerGroup("general").registerDefaults();
   }
 
   // set sqlite3 database file
-  setDBFile(filename: string) {
-    this.setProvider(
-       open({ filename, driver: sqlite3.Database })
-        .then(db => new SQLiteProvider(db))
-    )
+  async setDBFile(filename: string) {
+    const db = await open({ filename, driver: sqlite3.Database });
+    this.db = db;
+    this.setProvider(new SQLiteProvider(db));
   }
 
   // register a command
