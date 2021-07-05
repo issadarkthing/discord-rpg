@@ -348,6 +348,38 @@ client.login("your-bot-token");
 
 ```
 
+### API
+`DiscordRPG` extends `Client` from
+[commando.js](https://discord.js.org/#/docs/commando/master/general/welcome).
+
+##### DiscordRPG#db
+
+Returns `Database` instance from
+[node-sqlite3](https://github.com/mapbox/node-sqlite3/wiki/API) 
+which you can use to execute SQL statements.
+
+##### DiscordRPG#setDBFile(filename)
+
+Creates db file if not exists, and read from the specificied file name if
+exists. This method returns promise which you can use to create table after
+connection between db and js runtime has been made.
+
+##### DiscordRPG#registerCommand(commandInfo, command)
+
+Command info is details about your command such as `name`. You can read more
+regarding `commandInfo`
+[here](https://discord.js.org/#/docs/commando/master/typedef/CommandInfo).
+
+Command is a function that accepts two arguments. First argument `msg` is an
+instance of
+[Message](https://discord.js.org/#/docs/main/stable/search?query=Message#/docs/main/stable/search?query=Message#/docs/main/stable/search?query=Message)
+that triggers the command- from there, you can access both
+[Guild](https://discord.js.org/#/docs/main/stable/class/Message?scrollTo=guild#/docs/main/stable/class/Message?scrollTo=guild#/docs/main/stable/class/Message?scrollTo=guild) and
+[Channel](https://discord.js.org/#/docs/main/stable/class/Message?scrollTo=guild) of where the command was executed.
+
+`DiscordRPG#registerCommand` has been simplified so you can add commands without
+having to specify command groups and having to create a whole class.
+
 ### Documentation
 Finally, if you think there are missing documentation here and there you can
 checkout the following links:
