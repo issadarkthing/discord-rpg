@@ -1,6 +1,6 @@
 ### Installing
-```sh
-npm install https://github.com/issadarkthing/discord-rpg
+```bash
+$ npm install @jiman24/discord-rpg
 ```
 
 ### Setup
@@ -9,7 +9,7 @@ extends node's discord [commando](https://github.com/discordjs/Commando)
 framework. So if you feel the documentation here is incomplete, you can refer to
 their [documentation](https://discord.js.org/#/docs/commando).
 ```js
-const DiscordRPG = require('discord-rpg');
+const DiscordRPG = require('@jiman24/discord-rpg');
 
 const client = new DiscordRPG({ 
   commandPrefix: "sb!", // setup default command prefix
@@ -202,7 +202,7 @@ client.dispatcher.addInhibitor(msg => {
 ### Full source code
 ```js
 const { MessageEmbed, TextChannel } = require("discord.js");
-const DiscordRPG = require("discord-rpg");
+const DiscordRPG = require("@jiman24/discord-rpg");
 
 const client = new DiscordRPG({ 
   commandPrefix: "sb!",
