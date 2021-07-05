@@ -1,5 +1,5 @@
 {
-  "name": "discord-rpg",
+  "name": "@jiman24/discord-rpg",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/discord-rpg/index.js",
