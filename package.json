@@ -1,11 +1,11 @@
 {
   "name": "@jiman24/discord-rpg",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
-  "main": "./dist/discord-rpg/index.js",
-  "types": "./dist/discord-rpg/index.d.ts",
+  "main": "dist/discord-rpg/index.js",
+  "types": "dist/discord-rpg/index.d.ts",
   "files": [
-    "./dist"
+    "dist/"
   ],
   "scripts": {
     "build": "tsc",
