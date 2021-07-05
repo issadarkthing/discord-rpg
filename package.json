@@ -1,9 +1,9 @@
 {
   "name": "@jiman24/discord-rpg",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
-  "main": "dist/discord-rpg/index.js",
-  "types": "dist/discord-rpg/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/"
   ],
