@@ -46,6 +46,11 @@ client.setDBFile("data.db").then(() => {
   })
 ```
 
+### Changing command prefix
+Changing command prefix has been implemented by default by
+[commando](https://github.com/issadarkthing/discord-rpg). By
+default, only guild owner and admins can use this command.
+
 ### Adding command
 `discord-rpg` also provide simpler way to add command. Unlike `commando` where
 you have to extend `Command` class in order to add a command, you can just use
@@ -200,6 +205,7 @@ client.dispatcher.addInhibitor(msg => {
 ```
 
 ### Full source code
+
 ```js
 const { MessageEmbed, TextChannel } = require("discord.js");
 const DiscordRPG = require("@jiman24/discord-rpg");
@@ -345,7 +351,6 @@ client.dispatcher.addInhibitor(msg => {
 })
 
 client.login("your-bot-token");
-
 ```
 
 ### API
